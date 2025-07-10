@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Database Normalization</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-container {
+            margin-bottom: 2rem;
+        }
+        .normal-form-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            background-color: #f8f9fa;
+        }
+        .table-title {
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .nf-badge {
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+        }
+        .table-responsive {
+            margin-bottom: 1rem;
+        }
+        .table th {
+            background-color: #e9ecef;
+            font-weight: 600;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+        .table td {
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+        .currency {
+            color: #198754;
+            font-weight: 500;
+        }
+        .scroll-hint {
+            font-size: 0.75rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">Invoice Database Normalization</h1>
+                <p class="text-center text-muted mb-5">Demonstrating database normalization from 0NF to 3NF</p>
+                
+                <!-- 0NF Section -->
+                <div class="normal-form-section">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-danger nf-badge me-3">0NF</span>
+                        <h2 class="mb-0">Zero Normal Form (Unnormalized)</h2>
+                    </div>
+                    <p class="text-muted">All data in a single table with repeating groups and redundancy.</p>
+                    
+                    <div class="table-container">
+                        <h5 class="table-title">Invoice Table (Unnormalized)</h5>
+                        <p class="scroll-hint">Scroll horizontally to see all columns</p>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice No</th>
+                                        <th>Invoice Date</th>
+                                        <th>Due Date</th>
+                                        <th>Supplier Name</th>
+                                        <th>Supplier Address</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                        <th>Supplier Email</th>
+                                        <th>Client Name</th>
+                                        <th>Client Address</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                        <th>Client Email</th>
+                                        <th>Sub Total</th>
+                                        <th>Total</th>
+                                        <th>Item No</th>
+                                        <th>Item</th>
+                                        <th>HRS/QTY</th>
+                                        <th>Rate</th>
+                                        <th>Item Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>12345</td>
+                                        <td>Dec 14th, 2021</td>
+                                        <td>Dec 31th, 2021</td>
+                                        <td>IT Services Agency</td>
+                                        <td>IT Services Agency Location Street</td>
+                                        <td>City</td>
+                                        <td>United States Of America</td>
+                                        <td>IT@IT-services-agency-email.com</td>
+                                        <td>ABC Company</td>
+                                        <td>Client Location Street</td>
+                                        <td>City</td>
+                                        <td>United States Of America</td>
+                                        <td>client@client-email.com</td>
+                                        <td><span class="currency">USD 22,225.00</span></td>
+                                        <td><span class="currency">USD 22,225.00</span></td>
+                                        <td>1</td>
+                                        <td>Network Administration</td>
+                                        <td>65</td>
+                                        <td>130</td>
+                                        <td><span class="currency">USD 8,450.00</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1NF Section -->
+                <div class="normal-form-section">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-warning nf-badge me-3">1NF</span>
+                        <h2 class="mb-0">First Normal Form</h2>
+                    </div>
+                    <p class="text-muted">Eliminated repeating groups by creating separate tables.</p>
+                    
+                    <div class="table-container">
+                        <h5 class="table-title">Invoice Table</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice No</th>
+                                        <th>Invoice Date</th>
+                                        <th>Due Date</th>
+                                        <th>Supplier Name</th>
+                                        <th>Supplier Address</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                        <th>Supplier Email</th>
+                                        <th>Client Name</th>
+                                        <th>Client Address</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                        <th>Client Email</th>
+                                        <th>Sub Total</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>12345</td>
+                                        <td>Dec 14th, 2021</td>
+                                        <td>Dec 31th, 2021</td>
+                                        <td>IT Services Agency</td>
+                                        <td>IT Services Agency Location Street</td>
+                                        <td>City</td>
+                                        <td>United States Of America</td>
+                                        <td>IT@IT-services-agency-email.com</td>
+                                        <td>ABC Company</td>
+                                        <td>Client Location Street</td>
+                                        <td>City</td>
+                                        <td>United States Of America</td>
+                                        <td>client@client-email.com</td>
+                                        <td><span class="currency">USD 22,225.00</span></td>
+                                        <td><span class="currency">USD 22,225.00</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <h5 class="table-title">Invoice Items Table</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice No</th>
+                                        <th>Item No</th>
+                                        <th>Item</th>
+                                        <th>HRS/QTY</th>
+                                        <th>Rate</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>12345</td>
+                                        <td>1</td>
+                                        <td>Network Administration</td>
+                                        <td>65</td>
+                                        <td>130</td>
+                                        <td><span class="currency">USD 8,450.00</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2NF Section -->
+                <div class="normal-form-section">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-info nf-badge me-3">2NF</span>
+                        <h2 class="mb-0">Second Normal Form</h2>
+                    </div>
+                    <p class="text-muted">Eliminated partial dependencies by separating supplier and client data.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-container">
+                                <h5 class="table-title">Supplier Table</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>S_ID</th>
+                                                <th>Supplier Name</th>
+                                                <th>Supplier Address</th>
+                                                <th>City</th>
+                                                <th>Country</th>
+                                                <th>Supplier Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>S001</td>
+                                                <td>IT Services Agency</td>
+                                                <td>IT Services Agency Location Street</td>
+                                                <td>City</td>
+                                                <td>United States Of America</td>
+                                                <td>IT@IT-services-agency-email.com</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="table-container">
+                                <h5 class="table-title">Client Table</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>C_ID</th>
+                                                <th>Client Name</th>
+                                                <th>Client Address</th>
+                                                <th>City</th>
+                                                <th>Country</th>
+                                                <th>Client Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>C001</td>
+                                                <td>ABC Company</td>
+                                                <td>Client Location Street</td>
+                                                <td>City</td>
+                                                <td>United States Of America</td>
+                                                <td>client@client-email.com</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <h5 class="table-title">Invoice Table</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice No</th>
+                                        <th>S_ID</th>
+                                        <th>C_ID</th>
+                                        <th>Invoice Date</th>
+                                        <th>Due Date</th>
+                                        <th>Sub Total</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>12345</td>
+                                        <td>S001</td>
+                                        <td>C001</td>
+                                        <td>Dec 14th, 2021</td>
+                                        <td>Dec 31th, 2021</td>
+                                        <td><span class="currency">USD 22,225.00</span></td>
+                                        <td><span class="currency">USD 22,225.00</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-container">
+                                <h5 class="table-title">Item Details Table</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Item No</th>
+                                                <th>Item Name</th>
+                                                <th>Item Description</th>
+                                                <th>Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Network Administration</td>
+                                                <td>Network administration designing</td>
+                                                <td>130</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="table-container">
+                                <h5 class="table-title">Invoice Items Table</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Invoice No</th>
+                                                <th>Item No</th>
+                                                <th>HRS/QTY</th>
+                                                <th>Rate</th>
+                                                <th>Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>12345</td>
+                                                <td>1</td>
+                                                <td>65</td>
+                                                <td>130</td>
+                                                <td><span class="currency">USD 8,450.00</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3NF Section -->
+                <div class="normal-form-section">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-success nf-badge me-3">3NF</span>
+                        <h2 class="mb-0">Third Normal Form</h2>
+                    </div>
+                    <p class="text-muted">Eliminated transitive dependencies by creating separate address table.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-container">
+                                <h5 class="table-title">Supplier Table</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>S_ID</th>
+                                                <th>Supplier Name</th>
+                                                <th>Address_ID</th>
+                                                <th>Supplier Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>S001</td>
+                                                <td>IT Services Agency</td>
+                                                <td>A001</td>
+                                                <td>IT@IT-services-agency-email.com</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="table-container">
+                                <h5 class="table-title">Client Table</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>C_ID</th>
+                                                <th>Client Name</th>
+                                                <th>Address_ID</th>
+                                                <th>Client Email</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>C001</td>
+                                                <td>ABC Company</td>
+                                                <td>A002</td>
+                                                <td>client@client-email.com</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <h5 class="table-title">Address Table</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Address_ID</th>
+                                        <th>Street</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>A001</td>
+                                        <td>IT Services Agency Location Street</td>
+                                        <td>City</td>
+                                        <td>United States Of America</td>
+                                    </tr>
+                                    <tr>
+                                        <td>A002</td>
+                                        <td>Client Location Street</td>
+                                        <td>City</td>
+                                        <td>United States Of America</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <h5 class="table-title">Invoice Table</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice No</th>
+                                        <th>S_ID</th>
+                                        <th>C_ID</th>
+                                        <th>Invoice Date</th>
+                                        <th>Due Date</th>
+                                        <th>Sub Total</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>12345</td>
+                                        <td>S001</td>
+                                        <td>C001</td>
+                                        <td>Dec 14th, 2021</td>
+                                        <td>Dec 31th, 2021</td>
+                                        <td><span class="currency">USD 22,225.00</span></td>
+                                        <td><span class="currency">USD 22,225.00</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-container">
+                                <h5 class="table-title">Item Details Table</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Item No</th>
+                                                <th>Item Name</th>
+                                                <th>Item Description</th>
+                                                <th>Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Network Administration</td>
+                                                <td>Network administration designing</td>
+                                                <td>130</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="table-container">
+                                <h5 class="table-title">Invoice Items Table</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Invoice No</th>
+                                                <th>Item No</th>
+                                                <th>HRS/QTY</th>
+                                                <th>Rate</th>
+                                                <th>Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>12345</td>
+                                                <td>1</td>
+                                                <td>65</td>
+                                                <td>130</td>
+                                                <td><span class="currency">USD 8,450.00</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="alert alert-info">
+                    <h5 class="alert-heading">Database Normalization Summary</h5>
+                    <ul class="mb-0">
+                        <li><strong>0NF:</strong> Single table with all data, including repeating groups</li>
+                        <li><strong>1NF:</strong> Separated repeating groups into different tables</li>
+                        <li><strong>2NF:</strong> Eliminated partial dependencies by creating separate entities</li>
+                        <li><strong>3NF:</strong> Eliminated transitive dependencies by normalizing address information</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
